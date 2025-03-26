@@ -1,5 +1,6 @@
-import { ProductEntity } from '../entities/product.entity';
-import { ProductRepository } from './product.repository';
+import { ProductEntity } from "../entities/product.entity";
+import { ProductRepository } from "./product.repository";
+
 
 export class InMemoryProductRepository implements ProductRepository {
   private products: ProductEntity[] = [];

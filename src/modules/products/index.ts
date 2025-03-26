@@ -1,11 +1,11 @@
 import { FastifyInstance } from 'fastify';
 import { InMemoryProductRepository } from './repositories/in-memory-product.repository';
-import { ListProductsUseCase } from './usecases/list-products.usecase';
-import { CreateProductUseCase } from './usecases/create-product.usecase';
 import { ProductController } from './controllers/product.controller';
-import { FindByIdProductUseCase } from './usecases/find-by-id-product.usecase';
-import { UpdateProductUseCase } from './usecases/update-product.usecase';
-import { DeleteProductUseCase } from './usecases/delete-product.usecase';
+import { CreateProductUseCase } from './usecases/create-product-usecase/create-product.usecase';
+import { ListProductsUseCase } from './usecases/list-product-usecase/list-products.usecase';
+import { FindByIdProductUseCase } from './usecases/find-by-id-product-usecase/find-by-id-product.usecase';
+import { UpdateProductUseCase } from './usecases/update-product-usecase/update-product.usecase';
+import { DeleteProductUseCase } from './usecases/delete-product-usecase/delete-product.usecase';
 
 export async function ProductModule(server: FastifyInstance) {
   const productRepository = new InMemoryProductRepository();

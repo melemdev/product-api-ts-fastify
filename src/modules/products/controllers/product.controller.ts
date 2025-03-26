@@ -1,11 +1,11 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { CreateProductUseCase } from '../usecases/create-product.usecase';
-import { ListProductsUseCase } from '../usecases/list-products.usecase';
-import { createProductSchema, updateProductSchema } from '../schemas/product.schema';
 import { ProductRepository } from '../repositories/product.repository';
-import { FindByIdProductUseCase } from '../usecases/find-by-id-product.usecase';
-import { UpdateProductUseCase } from '../usecases/update-product.usecase';
-import { DeleteProductUseCase } from '../usecases/delete-product.usecase';
+import { createProductSchema, updateProductSchema } from '../schemas/product.schema';
+import { CreateProductUseCase } from '../usecases/create-product-usecase/create-product.usecase';
+import { DeleteProductUseCase } from '../usecases/delete-product-usecase/delete-product.usecase';
+import { FindByIdProductUseCase } from '../usecases/find-by-id-product-usecase/find-by-id-product.usecase';
+import { ListProductsUseCase } from '../usecases/list-product-usecase/list-products.usecase';
+import { UpdateProductUseCase } from '../usecases/update-product-usecase/update-product.usecase';
 
 export class ProductController {
   constructor(private readonly repository: ProductRepository) {}
