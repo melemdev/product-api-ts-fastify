@@ -3,14 +3,14 @@
 # ✅ Project Setup
 [x] Initialize project with `npm init -y`
 [x] Install Fastify and dependencies
-[ ] Set up TypeScript with `tsconfig.json`
-[ ] Create folder structure following DDD principles
+[x] Set up TypeScript with `tsconfig.json`
+[x] Create folder structure following DDD principles
 
 # ⚡ Implementation Steps
 
 ## 1️⃣ Setup Fastify Server
-[ ] Create `src/main.ts` for server bootstrap
-[ ] Configure `src/app.ts` with Fastify instance
+[x] Create `src/main.ts` for server bootstrap
+[x] Configure `src/app.ts` with Fastify instance
 [ ] Enable CORS and global error handling
 
 ## 2️⃣ Domain Layer (Business Logic)
