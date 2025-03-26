@@ -1,13 +1,12 @@
-# 🚀 Fastify API with DDD
+# 🚀 Fastify API
 
-A modern API built with Fastify following Domain-Driven Design principles.
+A modern, type-safe API built with Fastify and TypeScript.
 
 ## 📋 Project Overview
 
 This project demonstrates a robust API architecture using:
 - Fastify for high-performance routing
 - TypeScript for type safety
-- Domain-Driven Design (DDD) for scalable architecture
 - Zod for validation
 - Prisma for database management
 
@@ -17,23 +16,23 @@ This project demonstrates a robust API architecture using:
 - **Project Foundation**
   - Project initialization and dependency setup
   - TypeScript configuration
-  - DDD folder structure implementation
+  - Clean folder structure implementation
 
 - **Core Server Setup**
   - Server bootstrap configuration
   - CORS implementation
   - Global error handling
 
-- **Domain Layer**
+- **Core Features**
   - Product entity definition
   - Repository interface design
 
-- **Application Layer**
-  - Create product use case
-  - Update product use case
-  - Delete product use case
-  - Get product use case
-  - List products use case
+- **Product Operations**
+  - Create product
+  - Update product
+  - Delete product
+  - Get product
+  - List products
 
 - **API Features**
   - Request validation with Zod
