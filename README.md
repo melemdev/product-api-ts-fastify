@@ -47,7 +47,7 @@ This project demonstrates a robust API architecture using:
 - **Quality Assurance**
   - Custom error handling system
   - Comprehensive testing suite
-    - Unit test
+    - Unit tests
     - Integration tests
     - E2E tests
 
