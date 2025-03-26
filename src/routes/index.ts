@@ -1,34 +1,7 @@
-import z from "zod";
-import { FastifyTypedInstance } from "../shared/types";
+import { FastifyInstance } from 'fastify';
+import { ProductModule } from '../modules/products';
 
-export async function routes(app: FastifyTypedInstance) {
-  app.get(
-    "/products",
-    {
-      schema: {
-        description: "List Products",
-        tags: ["users"],
-      },
-    },
-    () => {
-      return [];
-    }
-  );
-
-  app.post(
-    "/products",
-    {
-      schema: {
-        description: "Create a new product",
-        tags: ["products"],
-        body: z.object({
-          title: z.string(),
-          price: z.coerce.number().min(0.1),
-        }),
-      },
-    },
-    () => {
-      return [];
-    }
-  );
+export async function routes(app: FastifyInstance) {
+  // Product Module
+  await ProductModule(app);
 }
