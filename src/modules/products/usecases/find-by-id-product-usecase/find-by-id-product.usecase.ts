@@ -1,9 +1,9 @@
 import z from 'zod';
-import { UseCase, UseCaseConfig } from '../../../shared/core/use-case';
-import { nullable } from '../../../shared/types/nullable';
-import { ProductEntity } from '../entities/product.entity';
-import { ProductRepository } from '../repositories/product.repository';
-import { productResponseSchema } from '../schemas/product.schema';
+import { UseCase, UseCaseConfig } from '../../../../shared/core/use-case';
+import { nullable } from '../../../../shared/types/nullable';
+import { ProductEntity } from '../../entities/product.entity';
+import { ProductRepository } from '../../repositories/product.repository';
+import { productResponseSchema } from '../../schemas/product.schema';
 
 export class FindByIdProductUseCase extends UseCase<string, nullable<ProductEntity>> {
   constructor(private readonly productRepository: ProductRepository) {

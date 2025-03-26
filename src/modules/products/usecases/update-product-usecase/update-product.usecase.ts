@@ -1,6 +1,6 @@
 import z from 'zod';
-import { ProductRepository } from '../repositories/product.repository';
-import { CreateProductDTO, productResponseSchema, UpdateProductDTO, updateProductSchema } from '../schemas/product.schema';
+import { ProductRepository } from '../../repositories/product.repository';
+import { CreateProductDTO, productResponseSchema, UpdateProductDTO, updateProductSchema } from '../../schemas/product.schema';
 
 export class UpdateProductUseCase {
   constructor(private readonly repository: ProductRepository) {}
@@ -26,7 +26,9 @@ export class UpdateProductUseCase {
       throw new Error('Product not found');
     }
 
-    Object.assign(product, data);
+    // Validate update data
+    const validatedData = updateProductSchema.parse(data);
+    Object.assign(product, validatedData);
     await this.repository.update(product);
     return product;
   }

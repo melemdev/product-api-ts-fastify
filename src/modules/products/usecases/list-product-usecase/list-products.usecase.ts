@@ -1,7 +1,7 @@
-import { UseCase, UseCaseConfig } from '../../../shared/core/use-case';
-import { ProductEntity } from '../entities/product.entity';
-import { ProductRepository } from '../repositories/product.repository';
-import { listProductsResponseSchema } from '../schemas/product.schema';
+import { UseCase, UseCaseConfig } from '../../../../shared/core/use-case';
+import { ProductEntity } from '../../entities/product.entity';
+import { ProductRepository } from '../../repositories/product.repository';
+import { listProductsResponseSchema } from '../../schemas/product.schema';
 
 export class ListProductsUseCase extends UseCase<void, ProductEntity[]> {
   constructor(private readonly productRepository: ProductRepository) {

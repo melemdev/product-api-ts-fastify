@@ -1,5 +1,5 @@
 import z from 'zod';
-import { ProductRepository } from '../repositories/product.repository';
+import { ProductRepository } from '../../repositories/product.repository';
 
 export class DeleteProductUseCase {
   constructor(private readonly repository: ProductRepository) {}
