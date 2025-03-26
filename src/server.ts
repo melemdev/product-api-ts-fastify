@@ -1,38 +1,73 @@
-import { fastifyCors } from "@fastify/cors";
-import { fastifySwagger } from "@fastify/swagger";
-import { fastifySwaggerUi } from "@fastify/swagger-ui";
-import { fastify } from "fastify";
+import 'dotenv/config';
+import { fastify } from 'fastify';
 
-import {
-  validatorCompiler,
-  serializerCompiler,
-  type ZodTypeProvider,
-  jsonSchemaTransform,
-} from "fastify-type-provider-zod";
+import { config } from './config';
+import { logger, setupLogger } from './shared/logger';
+import { jsonSchemaTransform, serializerCompiler, validatorCompiler, ZodTypeProvider } from 'fastify-type-provider-zod';
+import { errorHandler } from './shared/errors';
+import fastifyCors from '@fastify/cors';
+import fastifySwagger from '@fastify/swagger';
+import fastifySwaggerUi from '@fastify/swagger-ui';
+import { routes } from './routes';
 
-import { routes } from "./routes";
+async function bootstrap() {
+  try {
+    const server = fastify({
+      logger: config.log_level == 'verbose',
+    });
 
-const server = fastify().withTypeProvider<ZodTypeProvider>();
+    logger.debug('Logger Level: ' + config.log_level);
 
-server.setValidatorCompiler(validatorCompiler);
-server.setSerializerCompiler(serializerCompiler);
+    // Set logger
+    server.log = logger;
 
-server.register(fastifyCors, { origin: "*" });
+    // Set type provider
+    server.withTypeProvider<ZodTypeProvider>();
 
-server.register(fastifySwagger, {
-  openapi: {
-    info: {
-      title: "API Products",
-      version: "1.0.0",
-    },
-  },
-  transform: jsonSchemaTransform,
-});
+    // Set validators
+    server.setValidatorCompiler(validatorCompiler);
+    server.setSerializerCompiler(serializerCompiler);
 
-server.register(fastifySwaggerUi, { routePrefix: "/docs" });
+    // Set error handler
+    server.setErrorHandler(errorHandler);
 
-server.register(routes, { prefix: "/api" });
+    // Setup HTTP request logging
+    setupLogger(server);
 
-server.listen({ port: 3333 }).then(() => {
-  console.log("Server running at port 3333");
+    // Register plugins
+    await server.register(fastifyCors, config.cors);
+
+    await server.register(fastifySwagger, {
+      openapi: {
+        info: {
+          title: config.swagger.title,
+          version: config.swagger.version,
+        },
+      },
+      transform: jsonSchemaTransform,
+    });
+
+    await server.register(fastifySwaggerUi, {
+      routePrefix: '/docs',
+    });
+
+    // Register routes
+    await server.register(routes, { prefix: '/api' });
+
+    await server.listen({
+      port: config.port,
+      host: '0.0.0.0', // Allow external connections
+    });
+
+    logger.info(`Server running at http://localhost:${config.port}`);
+  } catch (err) {
+    logger.error('Failed to start server:', err);
+    console.log(err);
+    process.exit(1);
+  }
+}
+
+bootstrap().catch(err => {
+  logger.error('Unhandled error:', err);
+  process.exit(1);
 });
