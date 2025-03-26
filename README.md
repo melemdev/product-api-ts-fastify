@@ -1,44 +1,88 @@
-# Fastify API with DDD - Roadmap
+# 🚀 Fastify API with DDD
 
-# ✅ Project Setup
-[x] Initialize project with `npm init -y`
-[x] Install Fastify and dependencies
-[x] Set up TypeScript with `tsconfig.json`
-[x] Create folder structure following DDD principles
+A modern API built with Fastify following Domain-Driven Design principles.
 
-# ⚡ Implementation Steps
+## 📋 Project Overview
 
-## 1️⃣ Setup Fastify Server
-[x] Create `src/main.ts` for server bootstrap
-[x] Configure `src/app.ts` with Fastify instance
-[x] Enable CORS and global error handling
+This project demonstrates a robust API architecture using:
+- Fastify for high-performance routing
+- TypeScript for type safety
+- Domain-Driven Design (DDD) for scalable architecture
+- Zod for validation
+- Prisma for database management
 
-## 2️⃣ Domain Layer (Business Logic)
-[x] Define `Product` entity in `domain/entities/product.ts`
-[x] Define `ProductRepository` interface in `domain/repositories/product-repository.ts`
+## 🏗️ Project Status
 
-## 3️⃣ Application Layer (Use Cases)
-[x] Implement `create-product.ts`
-[x] Implement `update-product.ts`
-[x] Implement `delete-product.ts`
-[x] Implement `get-product.ts`
-[x] Implement `list-products.ts`
+### ✅ Completed
+- **Project Foundation**
+  - Project initialization and dependency setup
+  - TypeScript configuration
+  - DDD folder structure implementation
 
-## 4️⃣ Infrastructure Layer (Persistence)
-[ ] Install and configure Prisma
-[ ] Define `Product` model in `prisma/schema.prisma`
-[ ] Generate Prisma client with `npx prisma generate`
-[ ] Implement `prisma-product-repository.ts`
+- **Core Server Setup**
+  - Server bootstrap configuration
+  - CORS implementation
+  - Global error handling
 
-## 6️⃣ Validation & Error Handling
-[x] Add validation with `zod` or `fastify-schema`
-[ ] Implement custom error classes in `shared/errors/`
+- **Domain Layer**
+  - Product entity definition
+  - Repository interface design
 
-## 7️⃣ Testing
-[ ] Install `vitest` and `@fastify/test-helper`
-[ ] Write unit tests for use cases
-[ ] Write integration tests for routes
+- **Application Layer**
+  - Create product use case
+  - Update product use case
+  - Delete product use case
+  - Get product use case
+  - List products use case
 
-# 🚀 Final Steps
-[x] Add logging with `pino`
-[ ] Deploy using Docker or Vercel
+- **API Features**
+  - Request validation with Zod
+  - Logging system with Pino
+
+### 🚧 In Progress
+- **Infrastructure Layer**
+  - Prisma setup and configuration
+  - Database model definition
+  - Repository implementation
+
+- **Quality Assurance**
+  - Custom error handling system
+  - Comprehensive testing suite
+    - Unit tests
+    - Integration tests
+    - E2E tests
+
+### 📅 Upcoming
+- **Deployment**
+  - Docker containerization
+  - Vercel deployment setup
+
+## 🛠️ Technical Stack
+
+- **Framework**: Fastify
+- **Language**: TypeScript
+- **Validation**: Zod
+- **Database**: Prisma (planned)
+- **Testing**: Vitest (planned)
+- **Logging**: Pino
+
+## 🚀 Getting Started
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Run tests (when implemented)
+npm test
+```
+
+## 📚 Documentation
+
+API documentation will be available at `/docs` once the server is running.
+
+## 📝 License
+
+[Add your license here]
