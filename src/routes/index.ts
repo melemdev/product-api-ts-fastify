@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
-import { ProductModule } from '../modules/products';
+import { ProductRoutes } from './product.routes';
 
 export async function routes(app: FastifyInstance) {
   // Product Module
-  await ProductModule(app);
+  await ProductRoutes(app);
 }
