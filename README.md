@@ -80,7 +80,7 @@ npm test
 
 ## 📚 Documentation
 
-API documentation will be available at `/docs` once the server is running.
+API documentation will be available at `/docs` once the server is running
 
 ## 📝 License
 
