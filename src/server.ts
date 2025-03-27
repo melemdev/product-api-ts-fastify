@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import { fastify } from 'fastify';
 
-import { config } from './config';
+import { config } from './@config';
 import { logger, setupLogger } from './shared/logger';
 import { jsonSchemaTransform, serializerCompiler, validatorCompiler, ZodTypeProvider } from 'fastify-type-provider-zod';
 import { errorHandler } from './shared/errors';

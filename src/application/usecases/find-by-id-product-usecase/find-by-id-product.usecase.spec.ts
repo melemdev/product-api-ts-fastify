@@ -1,21 +1,16 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { ProductEntity } from '../../entities/product.entity';
-import { ProductRepository } from '../../repositories/product.repository';
+
 import { FindByIdProductUseCase } from './find-by-id-product.usecase';
+import { ProductEntity } from '@/core/entities/product.entity';
+import { ProductRepository } from '@/repositories/product.repository';
+import { MockProductRepository } from '@/shared/mocks/mock-product-repository';
 
 describe('FindByIdProductUseCase', () => {
   let useCase: FindByIdProductUseCase;
-  let mockRepository: ProductRepository;
+  let mockRepository: MockProductRepository;
 
   beforeEach(() => {
-    mockRepository = {
-      findAll: vi.fn(),
-      findById: vi.fn(),
-      create: vi.fn(),
-      update: vi.fn(),
-      delete: vi.fn(),
-    };
-
+    mockRepository = new MockProductRepository();
     useCase = new FindByIdProductUseCase(mockRepository);
   });
 
@@ -46,4 +41,4 @@ describe('FindByIdProductUseCase', () => {
     expect(result).toBeNull();
     expect(mockRepository.findById).toHaveBeenCalledWith(productId);
   });
-}); 
+});

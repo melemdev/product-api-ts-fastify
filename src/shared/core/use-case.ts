@@ -17,4 +17,4 @@ export abstract class UseCase<TInput = void, TOutput = void> {
   static config(): UseCaseConfig {
     return {};
   }
-} 
+}

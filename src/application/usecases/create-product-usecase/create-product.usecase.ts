@@ -1,8 +1,7 @@
-import { UseCase } from "@/shared/core/use-case";
-import { ProductEntity } from "../../entities/product.entity";
-import { ProductRepository } from "../../repositories/product.repository";
-import { CreateProductDTO, createProductSchema, productResponseSchema } from "../../schemas/product.schema";
-
+import { UseCase } from '@/shared/core/use-case';
+import { ProductRepository } from '@/repositories/product.repository';
+import { CreateProductDTO, createProductSchema, ProductSchema } from '@/core/schemas/product.schema';
+import { ProductEntity } from '@/core/entities/product.entity';
 
 export class CreateProductUseCase extends UseCase<CreateProductDTO, ProductEntity> {
   constructor(private readonly productRepository: ProductRepository) {
@@ -16,17 +15,16 @@ export class CreateProductUseCase extends UseCase<CreateProductDTO, ProductEntit
         tags: ['products'],
         body: createProductSchema,
         response: {
-          201: productResponseSchema,
+          201: ProductSchema,
         },
       },
     };
   }
 
   async execute(data: CreateProductDTO): Promise<ProductEntity> {
-    // Validate input data
     const validatedData = createProductSchema.parse(data);
-    
     const product = ProductEntity.create(validatedData.title, validatedData.price);
-    return this.productRepository.create(product);
+    await this.productRepository.save(product);
+    return product;
   }
 }

@@ -1,24 +1,15 @@
-
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { ProductEntity } from '../../entities/product.entity';
-import { ProductRepository } from '../../repositories/product.repository';
-import { CreateProductDTO } from '../../schemas/product.schema';
 import { CreateProductUseCase } from './create-product.usecase';
-
+import { ProductEntity } from '@/core/entities/product.entity';
+import { CreateProductDTO } from '@/core/schemas/product.schema';
+import { MockProductRepository } from '@/shared/mocks/mock-product-repository';
 
 describe('CreateProductUseCase', () => {
   let useCase: CreateProductUseCase;
-  let mockRepository: ProductRepository;
+  let mockRepository: MockProductRepository;
 
   beforeEach(() => {
-    mockRepository = {
-      findAll: vi.fn(),
-      findById: vi.fn(),
-      create: vi.fn(),
-      update: vi.fn(),
-      delete: vi.fn(),
-    };
-
+    mockRepository = new MockProductRepository();
     useCase = new CreateProductUseCase(mockRepository);
   });
 
@@ -30,7 +21,7 @@ describe('CreateProductUseCase', () => {
     };
 
     const expectedProduct = ProductEntity.create(productData.title, productData.price);
-    vi.spyOn(mockRepository, 'create').mockResolvedValue(expectedProduct);
+    vi.spyOn(mockRepository, 'save').mockResolvedValue(expectedProduct);
 
     // Act
     const result = await useCase.execute(productData);
@@ -39,7 +30,7 @@ describe('CreateProductUseCase', () => {
     expect(result).toBeDefined();
     expect(result.title).toBe(productData.title);
     expect(result.price).toBe(productData.price);
-    expect(mockRepository.create).toHaveBeenCalledWith(
+    expect(mockRepository.save).toHaveBeenCalledWith(
       expect.objectContaining({
         title: productData.title,
         price: productData.price,
@@ -47,7 +38,7 @@ describe('CreateProductUseCase', () => {
     );
   });
 
-  it('should throw an error if repository create fails', async () => {
+  it('should throw an error if repository save fails', async () => {
     // Arrange
     const productData: CreateProductDTO = {
       title: 'Test Product',
@@ -55,7 +46,7 @@ describe('CreateProductUseCase', () => {
     };
 
     const error = new Error('Database error');
-    vi.spyOn(mockRepository, 'create').mockRejectedValue(error);
+    vi.spyOn(mockRepository, 'save').mockRejectedValue(error);
 
     // Act & Assert
     await expect(useCase.execute(productData)).rejects.toThrow('Database error');
@@ -70,6 +61,6 @@ describe('CreateProductUseCase', () => {
 
     // Act & Assert
     await expect(useCase.execute(invalidProductData)).rejects.toThrow();
-    expect(mockRepository.create).not.toHaveBeenCalled();
+    expect(mockRepository.save).not.toHaveBeenCalled();
   });
-}); 
+});

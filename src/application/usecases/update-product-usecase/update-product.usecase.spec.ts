@@ -1,23 +1,17 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { ProductEntity } from '../../entities/product.entity';
-import { ProductRepository } from '../../repositories/product.repository';
-import { UpdateProductDTO } from '../../schemas/product.schema';
-import { UpdateProductUseCase } from './update-product.usecase';
 
+import { UpdateProductUseCase } from './update-product.usecase';
+import { ProductEntity } from '@/core/entities/product.entity';
+import { UpdateProductDTO } from '@/core/schemas/product.schema';
+import { ProductRepository } from '@/repositories/product.repository';
+import { MockProductRepository } from '@/shared/mocks/mock-product-repository';
 
 describe('UpdateProductUseCase', () => {
   let useCase: UpdateProductUseCase;
-  let mockRepository: ProductRepository;
+  let mockRepository: MockProductRepository;
 
   beforeEach(() => {
-    mockRepository = {
-      findAll: vi.fn(),
-      findById: vi.fn(),
-      create: vi.fn(),
-      update: vi.fn(),
-      delete: vi.fn(),
-    };
-
+    mockRepository = new MockProductRepository();
     useCase = new UpdateProductUseCase(mockRepository);
   });
 
@@ -31,9 +25,7 @@ describe('UpdateProductUseCase', () => {
 
     const existingProduct = ProductEntity.create('Original Product', 99.99);
     vi.spyOn(mockRepository, 'findById').mockResolvedValue(existingProduct);
-    vi.spyOn(mockRepository, 'update').mockResolvedValue(
-      ProductEntity.create(updateData.title!, updateData.price!)
-    );
+    vi.spyOn(mockRepository, 'save').mockResolvedValue(existingProduct);
 
     // Act
     const result = await useCase.execute(productId, updateData);
@@ -43,7 +35,7 @@ describe('UpdateProductUseCase', () => {
     expect(result.title).toBe(updateData.title);
     expect(result.price).toBe(updateData.price);
     expect(mockRepository.findById).toHaveBeenCalledWith(productId);
-    expect(mockRepository.update).toHaveBeenCalledWith(
+    expect(mockRepository.save).toHaveBeenCalledWith(
       expect.objectContaining({
         title: updateData.title,
         price: updateData.price,
@@ -63,7 +55,7 @@ describe('UpdateProductUseCase', () => {
 
     // Act & Assert
     await expect(useCase.execute(productId, updateData)).rejects.toThrow('Product not found');
-    expect(mockRepository.update).not.toHaveBeenCalled();
+    expect(mockRepository.save).not.toHaveBeenCalled();
   });
 
   it('should validate update data before applying changes', async () => {
@@ -79,6 +71,6 @@ describe('UpdateProductUseCase', () => {
 
     // Act & Assert
     await expect(useCase.execute(productId, invalidUpdateData)).rejects.toThrow();
-    expect(mockRepository.update).not.toHaveBeenCalled();
+    expect(mockRepository.save).not.toHaveBeenCalled();
   });
-}); 
+});
